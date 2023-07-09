@@ -3,14 +3,14 @@ import { Card } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import '../styles/PokemonList.css';
 
-const PokemonCard = ({ name }) => {
+const PokemonCard = ({ name, imagen }) => {
   return (
     <Card
       title={name}
       cover={
         <img
-          src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png'
-          alt='Ditto'
+          src={imagen}
+          alt={imagen}
         />
       }
       extra={<StarOutlined />}
