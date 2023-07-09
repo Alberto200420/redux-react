@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { Col } from 'antd';
+import Searcher from './components/searcher';
+import PokemonList from './components/PokemonList';
+import { getPokemon } from './api';
+import logo from './static/logo.svg';
+import './styles/App.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPokemons } from './actions';
 
 function App() {
+  const pokemons = useSelector((state) => state.pokemons);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchPokemons = async () => {
+      const pokemonsRes = await getPokemon();
+      dispatch(setPokemons(pokemonsRes));
+    };
+
+    fetchPokemons();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Col span={4} offset={10}>
+        <img src={logo} alt='Pokedux' />
+      </Col>
+      <Col span={8} offset={8}>
+        <Searcher />
+      </Col>
+      <PokemonList pokemons={pokemons} />
     </div>
   );
 }
